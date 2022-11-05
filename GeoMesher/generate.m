@@ -17,7 +17,7 @@ function [elements, Nod2e, vertices, e2edg, e2neigh, connect, freeedg, boundary,
 %           ind = [4 5 7 5 4 3 1 3; 1 3 4 5 7 5 4 3];   
 %            N = 10; 
 %            N = N*(max(ind(1,:))-1);
-%            L = [1.5 1] 
+%            L = [1.5 1]  
 %
 %
 h1 = (L(1)-0)/N;
