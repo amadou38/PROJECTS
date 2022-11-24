@@ -1,6 +1,7 @@
 function [inElt, outElt, uniq] = other_elements(ind, pelt, A, Elt, n, m)
 
 inElt = cell(1,n*m*4);
+%inElt = cell(1,n*m*(numel(pelt)-4));
 outElt = cell(1,n*m*(numel(pelt)-4));
 nbre1 = 0; l1 = 0;
 k = 1;
@@ -24,12 +25,17 @@ for j = 1:m
     x = x + max(ind(1,:)) - 1;
     k = k + 1;
     nbre2 = nbre1 + 4;
+    nc = 0;
     for count = 1:4
-      inElt{nbre1+count} = pelt{count};
+      if ~ismember(0,pelt{count})
+        nc = nc+1;
+        inElt{nbre1+nc} = pelt{count};
+      end
     end
     nbre1 = nbre2;
   end
-  y = y + max(ind(2,:)) - 1; 
+  y = y + max(ind(2,:)) - 1;
 end
+inElt = inElt(~cellfun(@isempty, inElt));
 
 end

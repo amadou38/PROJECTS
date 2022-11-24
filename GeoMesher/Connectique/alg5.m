@@ -24,14 +24,14 @@ for e = 1:nelt
             xmt = (xt(eloc,:) + xt(elocp,:))/2;
             nodlocneigh = e2nod{e2neigh{e}(eloc)};
             xl = vtx(nodlocneigh,:);
-            for u =1:length(nodlocneigh) 
+            for u =1:length(nodlocneigh)
                 up = u + 1;
                 if (u == length(nodlocneigh))
                     up = 1;
                 end
                 xml = (xl(u,:) + xl(up,:))/2;
                 if (norm(xmt-xml) <= 1e-18)
-                    nedg = nedg + 1; 
+                    nedg = nedg + 1;
                     e2edg{e}(eloc) = nedg;
                     e2edg{e2neigh{e}(eloc)}(u) = nedg;
                     break
@@ -42,13 +42,13 @@ for e = 1:nelt
             e2edg{e}(eloc) = nedg;
             freeedg(nedg) = true;
         end
-    end    
+    end
 end
 % Dernier post-traitement
 for e = 1:nelt
     neloc = length(e2nod{e});
     for eloc = 1:neloc
-        if freeedg(e2edg{e}(eloc)) == true
+        if (e2edg{e}(eloc) ~= 0) && (e2edg{e}(eloc) <= numel(freeedg)) && (freeedg(e2edg{e}(eloc)) == true)
             elocp = eloc + 1;
             if (eloc == neloc)
                 elocp = 1;

@@ -1,9 +1,12 @@
 function [inElt, outElt] = form(inElt,outElt,uniq,bounds,vertices)
-  
+
   uniq = unique(uniq);
   uniq = uniq(~ismember(uniq,bounds));
+  if ~isempty(inElt)
   [~,Nod2e,~,~,~,~] = getIDs(inElt, vertices);
   noeud = cell(1,numel(uniq)+4);
+  %Nod2e = Nod2e(~cellfun(@isempty, Nod2e));
+  %display(Nod2e);
   for i = 1:numel(uniq)
     intersect = Nod2e{uniq(i)};
     if numel(intersect)==2
@@ -47,16 +50,28 @@ function [inElt, outElt] = form(inElt,outElt,uniq,bounds,vertices)
   end
   vect = zeros(1,numel(bounds));
   for i = 1:numel(bounds)
-    vect(i) = Nod2e{bounds(i)};
+    if ~isempty(Nod2e{bounds(i)})
+      vect(i) = Nod2e{bounds(i)};
+    end
   end
   for i = 1:numel(vect)
-    noeud{numel(uniq)+i} = inElt{vect(i)};
+    if vect(i) ~= 0
+      noeud{numel(uniq)+i} = inElt{vect(i)};
+    end
   end
   inElt = cell(1,numel(noeud));
   for e = 1:numel(noeud)
       inElt{e} = unique(noeud{e},'stable');
   end
-  
+  for ei = 1:numel(inElt)-1
+    for ej = ei+1:numel(inElt)
+      if ismember(inElt{ei},inElt{ej})
+        inElt{ej} = [];
+      end
+    end
+  end
+  inElt = inElt(~cellfun(@isempty, inElt));
+end
   n_outElt = 0; I = cell(1,2); %I{1}(1) = 0;
   for e = 1:numel(outElt)
       n_outElt = n_outElt + 1;
@@ -81,7 +96,7 @@ function [inElt, outElt] = form(inElt,outElt,uniq,bounds,vertices)
       v1 = [outElt{e}(1) outElt{e}(end)];
       for i = e+1:numel(outElt)
           v2 = [outElt{i}(1) outElt{i}(end)];
-          if ismember(v1,v2) == true(1,2) 
+          if ismember(v1,v2) == true(1,2)
             noeud2{k} = outElt{e};
             noeud2{k}(end+1:end+numel(outElt{i})-2) = outElt{i}(2:end-1);
           end
