@@ -6,7 +6,7 @@ for e = 1:nelt
     edgloc = e2edg{e};
     nedgloc = length(edgloc);
     for ee = 1:nedgloc
-        if (edgtagged(edgloc(ee)) == false)
+        if (edgloc(ee) ~= 0) && (edgtagged(edgloc(ee)) == false)
             connect{e}(ee) = edgloc(ee);
             edgtagged(edgloc(ee)) = true;
         else
