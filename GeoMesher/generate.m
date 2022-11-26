@@ -49,8 +49,15 @@ Matrix_Elt = princ_elements(ind, A, n, m);
 %display(inElt);
 % A revoir
 bounds = [1 nx (nx-1)*ny+1 nx*ny];
-%[inElt, outElt] = form(inElt,outElt,uniq,bounds,vertices);
-
+dec = true(1);
+for e = 1:numel(pelt)
+  if ismember(0, pelt{e})
+    dec = false(1);
+  end
+end
+if dec
+  [inElt, outElt] = form2(inElt,outElt,uniq,bounds,vertices);
+end
 elts = cell(1,n*m);
 for i = 1:n*m
     elts{i} = Matrix_Elt(i,end:-1:1);
