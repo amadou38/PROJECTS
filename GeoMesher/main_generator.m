@@ -11,7 +11,7 @@ addpath('../Project Laplace/benchmark/');
 addpath('../Project Elasticity/benchmark/');
 name = 'mesh1';     % name of the mesh
 num_ind = 4;   % Corresponding face indices in the 'ind' cell array. NB: good from 1 to 13
-N = 2;        % N^2 corresponds to the total of principal elements on the mesh
+N = 3;        % N^2 corresponds to the total of principal elements on the mesh
 nbT = 2;
 L = [1 1];     % DOM = [0 L(1)]x[0 L(2)]
 ind = indices(num_ind);    % function containing the default indices of principal elements
