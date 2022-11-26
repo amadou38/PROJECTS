@@ -10,8 +10,8 @@ addpath('mesh_files/');
 addpath('../Project Laplace/benchmark/');
 addpath('../Project Elasticity/benchmark/');
 name = 'mesh1';     % name of the mesh
-num_ind = 11;   % Corresponding face indices in the 'ind' cell array. NB: good from 1 to 13
-N = 10;        % N^2 corresponds to the total of principal elements on the mesh
+num_ind = 10;   % Corresponding face indices in the 'ind' cell array. NB: good from 1 to 13
+N = 3;        % N^2 corresponds to the total of principal elements on the mesh
 nbT = 2;
 L = [1 1];     % DOM = [0 L(1)]x[0 L(2)]
 ind = indices(num_ind);    % function containing the default indices of principal elements
@@ -25,6 +25,7 @@ mesh = load('mesh1.mat');
 U = 10*rand(numel(elements),1);
 figure,
 plot_solution1(mesh,U);
+saveas(gcf,'exple.png')
 %filename = "solNum2x545x1";
 %readfile
 %tit = 'Approximate Solution 1';
